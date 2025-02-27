@@ -23,17 +23,25 @@ public class Employees_Chapter04 {
 
             // SQLクエリを準備
             statement = con.createStatement();
-            String sql = """
-                         CREATE TABLE employees (
-                           id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                           name VARCHAR(60) NOT NULL,
-                           age INT(11),
-                           address VARCHAR(255) 
-                         );
-                         """;
+            
+            // 既存のテーブルを削除する
+            String sqlDrop = "DROP TABLE IF EXISTS users";
+            statement.executeUpdate(sqlDrop);
+            System.out.println("既存のテーブルを削除しました");
+      	  
+      	 // テーブルを作成する
+    	  String sqlCreate = """
+    	  		       CREATE TABLE employees (
+    	  		        id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	  		        name VARCHAR(60) NOT NULL,
+    	  		        email VARCHAR(255) NOT NULL,
+    	  		        age INT(11),
+    	  		        address VARCHAR(255)
+    	  		       );
+    	  		       """;
             
             //　SQLクエリを実行（DBMSに送信）
-            int rowCnt = statement.executeUpdate(sql);
+            int rowCnt = statement.executeUpdate(sqlCreate);
             System.out.println("テーブルを作成:rowCnt=" + rowCnt );
         } catch(SQLException e) {
             System.out.println("エラー発生：" + e.getMessage());
